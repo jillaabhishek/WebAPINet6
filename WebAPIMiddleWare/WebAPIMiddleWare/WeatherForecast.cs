@@ -1,4 +1,4 @@
-namespace WebAPI
+namespace WebAPIMiddleWare
 {
     public class WeatherForecast
     {

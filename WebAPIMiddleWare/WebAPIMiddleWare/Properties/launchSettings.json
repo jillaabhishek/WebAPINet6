@@ -4,25 +4,25 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:51915",
-      "sslPort": 44378
+      "applicationUrl": "http://localhost:41876",
+      "sslPort": 44300
     }
   },
   "profiles": {
-    "WebAPI": {
+    "WebAPIMiddleWare": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": false,
-      "launchUrl": "weatherforecast",
-      "applicationUrl": "https://localhost:7237;http://localhost:5099",
+      "launchBrowser": true,
+      "launchUrl": "usingmapbranch",
+      "applicationUrl": "https://localhost:7256;http://localhost:5155",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
     "IIS Express": {
       "commandName": "IISExpress",
-      "launchBrowser": false,
-      "launchUrl": "weatherforecast",
+      "launchBrowser": true,
+      "launchUrl": "usingmapbranch",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
