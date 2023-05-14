@@ -1,3 +1,7 @@
 WebAPI/WebApplication1/obj/
 WebAPI/WebAPI/obj/
 WebAPIMiddleWare/WebAPIMiddleWare/obj/
+WebAPI/LoggerService/obj/
+WebAPI/WebAPI/bin/
+WebAPI/LoggerService/bin/
+WebAPI/Contracts/obj/

@@ -3,6 +3,8 @@ using System.Reflection.PortableExecutable;
 using System.Runtime.Intrinsics.X86;
 using System.Threading.Channels;
 using System;
+using Contracts;
+using LoggerService;
 
 namespace WebAPI.Extensions
 {
@@ -39,5 +41,8 @@ namespace WebAPI.Extensions
                  3. ForwardClientCertification -> default true
                  */
             });
+
+        public static void ConfigureLoggerService(this IServiceCollection services) =>
+                                        services.AddSingleton<ILoggerManager, LoggerManager>();
     }
 }
