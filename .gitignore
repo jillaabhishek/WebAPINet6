@@ -5,3 +5,8 @@ WebAPI/LoggerService/obj/
 WebAPI/WebAPI/bin/
 WebAPI/LoggerService/bin/
 WebAPI/Contracts/obj/
+WebAPI/.vs/
+WebAPI/Repository/obj/
+WebAPI/Repository/bin/
+WebAPI/Entities/obj/
+WebAPI/Entities/bin/
