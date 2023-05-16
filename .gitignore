@@ -10,3 +10,7 @@ WebAPI/Repository/obj/
 WebAPI/Repository/bin/
 WebAPI/Entities/obj/
 WebAPI/Entities/bin/
+WebAPI/Service/obj/
+WebAPI/Service.Contracts/obj/
+WebAPI/Service/bin/
+WebAPI/Service.Contracts/bin/
