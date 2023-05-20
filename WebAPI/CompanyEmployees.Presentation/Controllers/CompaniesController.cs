@@ -22,15 +22,8 @@ namespace CompanyEmployees.Presentation.Controllers
         [HttpGet]
         public IActionResult GetCompanies()
         {
-            try
-            {
-                var result = _serviceManager.CompanyService.GetAllCompanies(trackChanges: false);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, "Internal server error");
-            }
+            var result = _serviceManager.CompanyService.GetAllCompanies(trackChanges: false);
+            return Ok(result);
         }
     }
 }

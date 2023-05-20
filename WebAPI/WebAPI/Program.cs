@@ -1,3 +1,4 @@
+using Contracts;
 using Microsoft.AspNetCore.HttpOverrides;
 using NLog;
 using WebAPI.Extensions;
@@ -23,9 +24,9 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
-if (app.Environment.IsDevelopment())
-    app.UseDeveloperExceptionPage();
-else
+app.ConfigurationExceptionHandler(app.Services.GetRequiredService<ILoggerManager>());
+
+if (app.Environment.IsProduction())
     app.UseHsts();
 
 app.UseHttpsRedirection();
