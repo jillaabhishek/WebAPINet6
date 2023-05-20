@@ -14,3 +14,7 @@ WebAPI/Service/obj/
 WebAPI/Service.Contracts/obj/
 WebAPI/Service/bin/
 WebAPI/Service.Contracts/bin/
+WebAPI/CompanyEmployees.Presentation/bin/
+WebAPI/CompanyEmployees.Presentation/obj/
+WebAPI/Shared/obj/
+WebAPI/Contracts/bin/
