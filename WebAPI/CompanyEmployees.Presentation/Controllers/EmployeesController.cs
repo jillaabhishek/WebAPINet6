@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Shared.DataTransferObjects;
 using System;
@@ -62,6 +63,22 @@ namespace CompanyEmployees.Presentation.Controllers
             if (employeeDto == null) return BadRequest("EmployeeForUpdateDto object is null");
 
             _servicesManager.EmployeeService.UpdateEmployeeForCompany(companyId, employeeId, employeeDto, false, true);
+
+            return NoContent();
+        }
+
+        [HttpPatch("{id:guid}")]
+        public IActionResult PartiallyUpdateEmployeeForCompany(Guid companyId, Guid id, 
+                        [FromBody] JsonPatchDocument<EmployeeForUpdateDto> patchDto)
+        {
+            if (patchDto is null)
+                return BadRequest("patchDoc object sent from client is null.");
+
+            var result = _servicesManager.EmployeeService.GetEmployeeForPath(companyId, id, false, true);
+
+            patchDto.ApplyTo(result.employeeToPatch);
+
+            _servicesManager.EmployeeService.SaveChangesForPatch(result.employeeToPatch, result.employeeEntity);
 
             return NoContent();
         }
