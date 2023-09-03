@@ -83,6 +83,26 @@ namespace Service
                 throw new CompanyNotFoundException(companyId);            
 
             return _mapper.Map<CompanyDto>(company);
-        }        
+        }
+
+        public void DeleteCompany(Guid companyId, bool trackChanges)
+        {
+            var company = _repositoryManager.Company.GetCompany(companyId, trackChanges);
+
+            if (company == null) throw new CompanyNotFoundException(companyId);
+
+            _repositoryManager.Company.DeleteCompany(company);
+            _repositoryManager.Save();
+        }
+
+        public void UpdateCompany(Guid companyId, CompanyForUpdateDto companyDto, bool trackChanges)
+        {
+            var company = _repositoryManager.Company.GetCompany(companyId, trackChanges);
+
+            if (company == null) throw new CompanyNotFoundException(companyId);
+
+            _mapper.Map(companyDto, company);
+            _repositoryManager.Save();
+        }
     }
 }

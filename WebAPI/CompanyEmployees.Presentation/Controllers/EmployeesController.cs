@@ -47,5 +47,23 @@ namespace CompanyEmployees.Presentation.Controllers
 
             return CreatedAtRoute("GetEmployeeForCompany", new { companyId, employeeId = createdEmployee.Id }, createdEmployee);
         }
+
+        [HttpDelete("{employeeId:guid}")]
+        public IActionResult DeleteEmployee(Guid companyId, Guid employeeId)
+        {
+            _servicesManager.EmployeeService.DeleteEmployeeForCompany(companyId, employeeId, false);
+
+            return NoContent();
+        }
+
+        [HttpPut("{employeeId:guid}")]
+        public IActionResult UpdateEmployeeForCompany(Guid companyId, Guid employeeId, [FromBody] EmployeeForUpdateDto employeeDto)
+        {
+            if (employeeDto == null) return BadRequest("EmployeeForUpdateDto object is null");
+
+            _servicesManager.EmployeeService.UpdateEmployeeForCompany(companyId, employeeId, employeeDto, false, true);
+
+            return NoContent();
+        }
     }
 }

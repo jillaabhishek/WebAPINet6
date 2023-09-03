@@ -11,14 +11,13 @@ namespace Repository
 {
     public class CompanyRepository : RepositoryBase<Company>, ICompanyRepository
     {
-        public CompanyRepository(RepositoryContext repositoryContext) 
+        public CompanyRepository(RepositoryContext repositoryContext)
                             : base(repositoryContext)
         {
 
         }
 
         public void CreateCompany(Company company) => Create(company);
-
 
         public IEnumerable<Company> GetAllCompanies(bool trackChanges) =>
                 FindAll(trackChanges)
@@ -31,5 +30,7 @@ namespace Repository
 
         public Company GetCompany(Guid companyId, bool trackChanges) =>
                 FindByCondition(x => x.Id.Equals(companyId), trackChanges).SingleOrDefault();
+
+        public void DeleteCompany(Company company) => Delete(company);
     }
 }

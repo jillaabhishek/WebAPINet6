@@ -4,6 +4,7 @@ using Shared.DataTransferObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -60,6 +61,22 @@ namespace CompanyEmployees.Presentation.Controllers
             var result = _serviceManager.CompanyService.CreateCompanyCollection(companies);
 
             return CreatedAtRoute("CompanyCollection", new { result.ids }, result.companies);
+        }
+
+        [HttpDelete("{companyId:guid}")]
+        public IActionResult DeleteCompany(Guid companyId)
+        {
+            _serviceManager.CompanyService.DeleteCompany(companyId, false);
+
+            return NoContent();
+        }
+
+        [HttpPut("{companyId:guid}")]
+        public IActionResult UpdateCompany(Guid companyId, CompanyForUpdateDto companyDto)
+        {
+            _serviceManager.CompanyService.UpdateCompany(companyId, companyDto, true);
+
+            return NoContent();
         }
     }
 }
