@@ -42,6 +42,9 @@ namespace CompanyEmployees.Presentation.Controllers
             if (company == null)
                 return BadRequest("CompanyForCreateionDto object is null");
 
+            if (!ModelState.IsValid)
+                return UnprocessableEntity(ModelState);
+
             var createdCompany = _serviceManager.CompanyService.CreateCompany(company);
 
             return CreatedAtRoute("CompanyById", new { companyId = createdCompany.Id }, createdCompany);
@@ -74,6 +77,9 @@ namespace CompanyEmployees.Presentation.Controllers
         [HttpPut("{companyId:guid}")]
         public IActionResult UpdateCompany(Guid companyId, CompanyForUpdateDto companyDto)
         {
+            if (!ModelState.IsValid)
+                return UnprocessableEntity(ModelState);
+
             _serviceManager.CompanyService.UpdateCompany(companyId, companyDto, true);
 
             return NoContent();

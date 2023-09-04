@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace Shared.DataTransferObjects
 {
-    public record EmployeeForUpdateDto(string name, int Age, string Position);
+    public record EmployeeForUpdateDto : EmployeeForManipulationDto;
 }
