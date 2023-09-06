@@ -58,8 +58,7 @@ namespace WebAPI.Extensions
 
         public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration) =>
                 services.AddDbContext<RepositoryContext>(opts =>
-                    opts.UseSqlServer(configuration.GetConnectionString("sqlConnection"))
-                );
+                    opts.UseSqlServer(configuration.GetConnectionString("sqlConnection")));
 
         //Shortcut implementation for ConfigureSqlContext
         //But it doesn’t provide all of the features the AddDbContext method provides.So for more advanced

@@ -15,6 +15,6 @@ namespace Contracts
 
         void Save();
 
-        void SaveASync();
+        Task SaveASync();
     }
 }

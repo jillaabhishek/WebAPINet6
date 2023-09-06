@@ -26,6 +26,6 @@ namespace Repository
 
         public void Save() => _repositoryContext.SaveChanges();
 
-        public void SaveASync() => _repositoryContext.SaveChangesAsync();
+        public async Task SaveASync() => await _repositoryContext.SaveChangesAsync();
     }
 }
