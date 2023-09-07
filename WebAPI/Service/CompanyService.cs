@@ -77,19 +77,14 @@ namespace Service
 
         public async Task<CompanyDto> GetCompanyAsync(Guid companyId, bool trackChanges)
         {
-            var company = await _repositoryManager.Company.GetCompany(companyId, trackChanges);
-
-            if (company == null)
-                throw new CompanyNotFoundException(companyId);
+            var company = await GetCompanyAndCheckIfItExist(companyId, trackChanges);
 
             return _mapper.Map<CompanyDto>(company);
         }
 
         public async Task DeleteCompanyAsync(Guid companyId, bool trackChanges)
         {
-            var company = await _repositoryManager.Company.GetCompany(companyId, trackChanges);
-
-            if (company == null) throw new CompanyNotFoundException(companyId);
+            var company = await GetCompanyAndCheckIfItExist(companyId, trackChanges);
 
             _repositoryManager.Company.DeleteCompany(company);
             await _repositoryManager.SaveASync();
@@ -97,12 +92,19 @@ namespace Service
 
         public async Task UpdateCompanyAsync(Guid companyId, CompanyForUpdateDto companyDto, bool trackChanges)
         {
+            var company = await GetCompanyAndCheckIfItExist(companyId, trackChanges);
+
+            _mapper.Map(companyDto, company);
+            await _repositoryManager.SaveASync();
+        }
+
+        private async Task<Company> GetCompanyAndCheckIfItExist(Guid companyId, bool trackChanges)
+        {
             var company = await _repositoryManager.Company.GetCompany(companyId, trackChanges);
 
             if (company == null) throw new CompanyNotFoundException(companyId);
 
-            _mapper.Map(companyDto, company);
-            await _repositoryManager.SaveASync();
+            return company;
         }
     }
 }
