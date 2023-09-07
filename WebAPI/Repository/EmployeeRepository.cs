@@ -1,6 +1,7 @@
 ﻿using Contracts;
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
+using Shared.RequestFeatures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace Repository
 {
     public class EmployeeRepository : RepositoryBase<Employee>, IEmployeeRepository
     {
-        public EmployeeRepository(RepositoryContext repositoryContext) 
+        public EmployeeRepository(RepositoryContext repositoryContext)
                         : base(repositoryContext)
         {
 
@@ -23,16 +24,24 @@ namespace Repository
             Create(employee);
         }
 
-        public async Task<Employee> GetEmployee(Guid companyId, Guid employeeId, bool trackChanges) => 
+        public async Task<Employee> GetEmployee(Guid companyId, Guid employeeId, bool trackChanges) =>
             await FindByCondition(x => x.CompanyId.Equals(companyId) && x.Id.Equals(employeeId), trackChanges)
                    .SingleOrDefaultAsync();
-        
-        
 
-        public async Task<IEnumerable<Employee>> GetEmployees(Guid companyId, bool trackChanges) =>
-            await FindByCondition(x => x.CompanyId.Equals(companyId), trackChanges)
-                        .OrderBy(x => x.Name)
-                        .ToListAsync();
+
+
+        public async Task<PagedList<Employee>> GetEmployees(Guid companyId, EmployeeParameters employeeParameters, bool trackChanges)
+        {
+            var employee = await FindByCondition(x => x.CompanyId.Equals(companyId), trackChanges)
+                           .OrderBy(x => x.Name)
+                           .Skip((employeeParameters.PageNumber - 1) * employeeParameters.PageSize)
+                           .Take(employeeParameters.PageSize)
+                           .ToListAsync();
+
+            var employeeCount = await FindByCondition(x => x.CompanyId == companyId, false).CountAsync();
+
+            return new PagedList<Employee>(employee, employeeCount, employeeParameters.PageNumber, employeeParameters.PageSize);
+        }
 
         public void DeleteEmployee(Employee employee) => Delete(employee);
     }
