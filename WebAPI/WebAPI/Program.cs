@@ -6,6 +6,10 @@ using NLog;
 using WebAPI.Extensions;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using CompanyEmployees.Presentation.ActionFilters;
+using Shared.DataTransferObjects;
+using Service.DataShaping;
+using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +18,10 @@ LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nl
 
 NewtonsoftJsonPatchInputFormatter GetJsonPathInputFormatter()
 {
-    return new ServiceCollection().AddLogging().AddMvc().AddNewtonsoftJson().Services.BuildServiceProvider()
+    return new ServiceCollection().AddLogging()
+                    .AddMvc()                    
+                    .AddNewtonsoftJson()
+                    .Services.BuildServiceProvider()
                                   .GetRequiredService<IOptions<MvcOptions>>().Value.InputFormatters
                                   .OfType<NewtonsoftJsonPatchInputFormatter>().First();
 }
@@ -28,6 +35,7 @@ builder.Services.ConfigureSqlContext(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.Configure<ApiBehaviorOptions>(opts => { opts.SuppressModelStateInvalidFilter = true; });
 builder.Services.AddScoped<ValidationFilterAttribute>();
+builder.Services.AddScoped<IDataShaper<EmployeeDto>, DataShaper<EmployeeDto>>();
 
 builder.Services.AddControllers(config =>
             {
@@ -35,6 +43,7 @@ builder.Services.AddControllers(config =>
                 config.ReturnHttpNotAcceptable = true;
                 config.InputFormatters.Insert(0, GetJsonPathInputFormatter());
             })
+                .AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles)
                 .AddXmlDataContractSerializerFormatters()
                 .AddCustomCSVFormatter()
                 .AddApplicationPart(typeof(CompanyEmployees.Presentation.AssemblyReference).Assembly);

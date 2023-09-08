@@ -7,6 +7,7 @@ using Shared.DataTransferObjects;
 using Shared.RequestFeatures;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,14 +19,17 @@ namespace Service
         private readonly IRepositoryManager _repositoryManager;
         private readonly ILoggerManager _loggerManager;
         private readonly IMapper _mapper;
+        private readonly IDataShaper<EmployeeDto> _dataShaper;
 
         public EmployeeService(IRepositoryManager repositoryManager, 
                                ILoggerManager loggerManager, 
-                               IMapper mapper)
+                               IMapper mapper,
+                               IDataShaper<EmployeeDto> dataShaper)
         {
             _repositoryManager = repositoryManager;
             _loggerManager = loggerManager;
             _mapper = mapper;
+            _dataShaper = dataShaper;
         }
 
         public async Task<EmployeeDto> CreateEmployeeForCompanyAsync(Guid companyId, EmployeeForCreationDto employee, bool trackChanges)
@@ -48,7 +52,7 @@ namespace Service
             return _mapper.Map<EmployeeDto>(employee);
         }
 
-        public async Task<(IEnumerable<EmployeeDto> employees, MetaData metadata)> GetEmployeesAsync(Guid companyId, 
+        public async Task<(IEnumerable<ExpandoObject> employees, MetaData metadata)> GetEmployeesAsync(Guid companyId, 
                             EmployeeParameters employeeParameters, bool trackChanges)
         {
             if (!employeeParameters.ValidAgeRange)
@@ -58,7 +62,10 @@ namespace Service
            
             var employeesWithMetadata = await _repositoryManager.Employee.GetEmployees(companyId, employeeParameters, trackChanges);
 
-            return (_mapper.Map<IEnumerable<EmployeeDto>>(employeesWithMetadata), employeesWithMetadata.MetaData);
+            var employeeDto = _mapper.Map<IEnumerable<EmployeeDto>>(employeesWithMetadata);
+            var shapedData = _dataShaper.ShapeData(employeeDto, employeeParameters.Fields);
+
+            return (shapedData, employeesWithMetadata.MetaData);
         }
 
         public async Task DeleteEmployeeForCompanyAsync(Guid companyId, Guid employeeId, bool trackChanges)
