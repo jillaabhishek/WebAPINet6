@@ -78,5 +78,13 @@ namespace CompanyEmployees.Presentation.Controllers
 
             return NoContent();
         }
+
+        [HttpOptions]
+        public IActionResult GetCompaniesOptions()
+        {
+            Response.Headers.Add("Allow", "GET, POST, DELETE, OPTIONS, PUT");
+
+            return Ok();
+        }
     }
 }
