@@ -54,7 +54,7 @@ namespace WebAPI.Extensions
         public static void ConfigureLoggerService(this IServiceCollection services) =>
                                         services.AddSingleton<ILoggerManager, LoggerManager>();
 
-        public static void ConfigureRepositoryManager(this IServiceCollection services) => 
+        public static void ConfigureRepositoryManager(this IServiceCollection services) =>
                 services.AddScoped<IRepositoryManager, RepositoryManager>();
 
         public static void ConfigureServiceManager(this IServiceCollection services) =>
@@ -83,16 +83,22 @@ namespace WebAPI.Extensions
                                                           .OfType<SystemTextJsonOutputFormatter>()?
                                                           .FirstOrDefault();
 
-                if(systemTextJsonOutputFormatter != null)                
+                if (systemTextJsonOutputFormatter != null)
+                {
                     systemTextJsonOutputFormatter.SupportedMediaTypes.Add("application/vnd.codemaze.hateoas+json");
+                    systemTextJsonOutputFormatter.SupportedMediaTypes.Add("application/vnd.codemaze.apiroot+json");
+                }
 
                 var xmlOutputFormatter = config.OutputFormatters
                                                .OfType<XmlDataContractSerializerOutputFormatter>()?
                                                .FirstOrDefault();
 
                 if (xmlOutputFormatter != null)
+                {
                     xmlOutputFormatter.SupportedMediaTypes.Add("application/vnd.codemaze.hateoas+xml");
-                
+                    xmlOutputFormatter.SupportedMediaTypes.Add("application/vnd.codemaze.apiroot+xml");
+                }
+
             });
         }
 
