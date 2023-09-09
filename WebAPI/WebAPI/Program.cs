@@ -10,6 +10,7 @@ using Shared.DataTransferObjects;
 using Service.DataShaping;
 using Newtonsoft.Json;
 using System.Text.Json.Serialization;
+using WebAPI.Utility;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +37,8 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.Configure<ApiBehaviorOptions>(opts => { opts.SuppressModelStateInvalidFilter = true; });
 builder.Services.AddScoped<ValidationFilterAttribute>();
 builder.Services.AddScoped<IDataShaper<EmployeeDto>, DataShaper<EmployeeDto>>();
+builder.Services.AddScoped<ValidateMediaTypeAttribute>();
+builder.Services.AddScoped<IEmployeeLinks, EmployeeLinks>();
 
 builder.Services.AddControllers(config =>
             {
@@ -47,6 +50,8 @@ builder.Services.AddControllers(config =>
                 .AddXmlDataContractSerializerFormatters()
                 .AddCustomCSVFormatter()
                 .AddApplicationPart(typeof(CompanyEmployees.Presentation.AssemblyReference).Assembly);
+
+builder.Services.AddCustomMediaTypes();
 
 var app = builder.Build();
 

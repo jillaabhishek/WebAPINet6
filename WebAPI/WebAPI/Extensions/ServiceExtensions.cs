@@ -10,6 +10,9 @@ using Service.Contracts;
 using Service;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Mvc.Formatters;
 
 namespace WebAPI.Extensions
 {
@@ -71,6 +74,27 @@ namespace WebAPI.Extensions
 
         public static IMvcBuilder AddCustomCSVFormatter(this IMvcBuilder builder) =>
             builder.AddMvcOptions(config => config.OutputFormatters.Add(new CsvOutputFormatter()));
+
+        public static void AddCustomMediaTypes(this IServiceCollection services)
+        {
+            services.Configure<MvcOptions>(config =>
+            {
+                var systemTextJsonOutputFormatter = config.OutputFormatters
+                                                          .OfType<SystemTextJsonOutputFormatter>()?
+                                                          .FirstOrDefault();
+
+                if(systemTextJsonOutputFormatter != null)                
+                    systemTextJsonOutputFormatter.SupportedMediaTypes.Add("application/vnd.codemaze.hateoas+json");
+
+                var xmlOutputFormatter = config.OutputFormatters
+                                               .OfType<XmlDataContractSerializerOutputFormatter>()?
+                                               .FirstOrDefault();
+
+                if (xmlOutputFormatter != null)
+                    xmlOutputFormatter.SupportedMediaTypes.Add("application/vnd.codemaze.hateoas+xml");
+                
+            });
+        }
 
     }
 }
