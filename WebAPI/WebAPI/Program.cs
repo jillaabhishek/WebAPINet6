@@ -45,6 +45,7 @@ builder.Services.AddControllers(config =>
                 config.RespectBrowserAcceptHeader = true;
                 config.ReturnHttpNotAcceptable = true;
                 config.InputFormatters.Insert(0, GetJsonPathInputFormatter());
+                config.CacheProfiles.Add("120SecondDuration", new CacheProfile { Duration = 120 });
             })
                 .AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles)
                 .AddXmlDataContractSerializerFormatters()
@@ -53,6 +54,8 @@ builder.Services.AddControllers(config =>
 
 builder.Services.AddCustomMediaTypes();
 builder.Services.ConfigureVersioning();
+builder.Services.ConfigureResponseCaching();
+builder.Services.ConfigureHttpCacheHeaders();
 
 var app = builder.Build();
 
@@ -66,6 +69,10 @@ if (app.Environment.IsProduction())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseForwardedHeaders(new ForwardedHeadersOptions { ForwardedHeaders = ForwardedHeaders.All });
+app.UseCors("CorsPolicy");
+app.UseResponseCaching();
+app.UseHttpCacheHeaders();
+
 app.UseAuthorization();
 app.MapControllers();
 
