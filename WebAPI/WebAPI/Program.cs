@@ -52,6 +52,7 @@ builder.Services.AddControllers(config =>
                 .AddApplicationPart(typeof(CompanyEmployees.Presentation.AssemblyReference).Assembly);
 
 builder.Services.AddCustomMediaTypes();
+builder.Services.ConfigureVersioning();
 
 var app = builder.Build();
 

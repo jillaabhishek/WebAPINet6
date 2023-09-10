@@ -13,6 +13,8 @@ using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.AspNetCore.Mvc.Versioning;
+using CompanyEmployees.Presentation.Controllers;
 
 namespace WebAPI.Extensions
 {
@@ -99,6 +101,25 @@ namespace WebAPI.Extensions
                     xmlOutputFormatter.SupportedMediaTypes.Add("application/vnd.codemaze.apiroot+xml");
                 }
 
+            });
+        }
+
+        public static void ConfigureVersioning(this IServiceCollection services)
+        {
+            services.AddApiVersioning(opts =>
+            {
+                opts.ReportApiVersions = true;
+                opts.AssumeDefaultVersionWhenUnspecified = true;
+                opts.DefaultApiVersion = new ApiVersion(1, 0);
+                opts.ApiVersionReader = new HeaderApiVersionReader("api-version");
+                //opts.ApiVersionReader = new QueryStringApiVersionReader("api-version"); It's an by default selected
+
+                //Below not using any library  
+                //opts.Conventions.Controller<CompaniesController>()
+                //                .HasApiVersion(new ApiVersion(1, 0));
+
+                //opts.Conventions.Controller<CompaniesV2Controller>()
+                //                .HasDeprecatedApiVersion(new ApiVersion(2, 0));
             });
         }
 
