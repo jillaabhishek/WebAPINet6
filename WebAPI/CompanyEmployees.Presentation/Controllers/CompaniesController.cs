@@ -15,6 +15,7 @@ namespace CompanyEmployees.Presentation.Controllers
 {
     [Route("api/companies")]
     [ApiController]
+    [ApiExplorerSettings(GroupName = "v1")]
     //[ResponseCache(CacheProfileName = "120SecondDuration")]
     public class CompaniesController : ControllerBase
     {
@@ -25,6 +26,10 @@ namespace CompanyEmployees.Presentation.Controllers
             _serviceManager = serviceManager;
         }
 
+        /// <summary>
+        /// Gets the list of all companies
+        /// </summary>
+        /// <returns>The companies list</returns>
         [HttpGet(Name = "GetCompanies")]
         [Authorize(Roles ="Manager")]
         public async Task<IActionResult> GetCompanies()
@@ -46,6 +51,9 @@ namespace CompanyEmployees.Presentation.Controllers
 
         [HttpPost(Name = "CreateCompany")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(422)]
         public async Task<IActionResult> CreateCompany([FromBody] CompanyForCreationDto company)
         {
             var createdCompany = await _serviceManager.CompanyService.CreateCompanyAsync(company);

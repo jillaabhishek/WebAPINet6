@@ -68,6 +68,7 @@ builder.Services.AddAuthentication();
 builder.Services.ConfigureIdentity();
 builder.Services.ConfigureJWT(builder.Configuration);
 builder.Services.AddJwtConfiguration(builder.Configuration);
+builder.Services.ConfigureSwagger();
 
 var app = builder.Build();
 
@@ -86,10 +87,19 @@ app.UseCors("CorsPolicy");
 app.UseResponseCaching();
 app.UseHttpCacheHeaders();
 app.UseAuthentication();
+
+app.UseSwagger();
+app.UseSwaggerUI(x =>
+{
+    x.SwaggerEndpoint("/swagger/v1/swagger.json", "Code Maze API v1");
+    x.SwaggerEndpoint("/swagger/v2/swagger.json", "Code Maze API v2");
+});
+
 app.UseAuthorization();
 app.MapControllers();
-
 //app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
 //If we use MapControllerRoute app.UseRouting method to add the routing middleware in the application’s pipeline.
+
+
 
 app.Run();
