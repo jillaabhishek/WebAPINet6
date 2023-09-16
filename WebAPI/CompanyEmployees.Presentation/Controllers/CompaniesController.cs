@@ -1,4 +1,6 @@
 ﻿using CompanyEmployees.Presentation.ActionFilters;
+using CompanyEmployees.Presentation.Extensions;
+using Entities.Responses;
 using Marvin.Cache.Headers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +19,7 @@ namespace CompanyEmployees.Presentation.Controllers
     [ApiController]
     [ApiExplorerSettings(GroupName = "v1")]
     //[ResponseCache(CacheProfileName = "120SecondDuration")]
-    public class CompaniesController : ControllerBase
+    public class CompaniesController : ApiControllerBase
     {
         private readonly IServiceManager _serviceManager;
 
@@ -31,22 +33,30 @@ namespace CompanyEmployees.Presentation.Controllers
         /// </summary>
         /// <returns>The companies list</returns>
         [HttpGet(Name = "GetCompanies")]
-        [Authorize(Roles ="Manager")]
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> GetCompanies()
         {
-            var result = await _serviceManager.CompanyService.GetAllCompaniesAsync(trackChanges: false);
-            return Ok(result);
+            var baseResult = await _serviceManager.CompanyService.GetAllCompaniesAsync(trackChanges: false);
+            var companies = baseResult.GetResult<IEnumerable<CompanyDto>>();
+
+            return Ok(companies);
         }
 
         [HttpGet("{companyId:guid}", Name = "CompanyById")]
         //[ResponseCache(Duration = 60)]
-        [HttpCacheExpiration(CacheLocation=CacheLocation.Public, MaxAge =60)]
+        [HttpCacheExpiration(CacheLocation = CacheLocation.Public, MaxAge = 60)]
         [HttpCacheValidation(MustRevalidate = false)]
+        [Authorize]
         public async Task<IActionResult> GetCompany(Guid companyId)
         {
-            var result = await _serviceManager.CompanyService.GetCompanyAsync(companyId, false);
+            var baseResult = await _serviceManager.CompanyService.GetCompanyAsync(companyId, false);
 
-            return Ok(result);
+            if (!baseResult.Success)
+                return ProcessError(baseResult);
+
+            var company = baseResult.GetResult<CompanyDto>();
+
+            return Ok(company);
         }
 
         [HttpPost(Name = "CreateCompany")]

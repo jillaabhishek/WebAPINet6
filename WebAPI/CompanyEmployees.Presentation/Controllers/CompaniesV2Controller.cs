@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CompanyEmployees.Presentation.Extensions;
+using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
+using Shared.DataTransferObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,11 +23,10 @@ namespace CompanyEmployees.Presentation.Controllers
         [HttpGet]
         public async Task<IActionResult> GetCompanies()
         {
-            var companies = await _serviceManager.CompanyService.GetAllCompaniesAsync(false);
+            var baseResult = await _serviceManager.CompanyService.GetAllCompaniesAsync(trackChanges: false);
+            var companies = baseResult.GetResult<IEnumerable<CompanyDto>>();
 
-            var companiesv2 = companies.Select(x => $"{x.Name} V2");
-
-            return Ok(companiesv2);
+            return Ok(companies);
         }
 
     }

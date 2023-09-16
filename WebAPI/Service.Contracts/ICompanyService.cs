@@ -1,4 +1,5 @@
-﻿using Shared.DataTransferObjects;
+﻿using Entities.Responses;
+using Shared.DataTransferObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,8 @@ namespace Service.Contracts
 {
     public interface ICompanyService
     {
-        Task<IEnumerable<CompanyDto>> GetAllCompaniesAsync(bool trackChanges);
-        Task<CompanyDto> GetCompanyAsync(Guid companyId, bool trackChanges);
+        Task<ApiBaseResponse> GetAllCompaniesAsync(bool trackChanges);
+        Task<ApiBaseResponse> GetCompanyAsync(Guid companyId, bool trackChanges);
 
         Task<CompanyDto> CreateCompanyAsync(CompanyForCreationDto company);
 

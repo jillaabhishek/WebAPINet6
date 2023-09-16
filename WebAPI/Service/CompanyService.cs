@@ -2,6 +2,7 @@
 using Contracts;
 using Entities.Exceptions;
 using Entities.Models;
+using Entities.Responses;
 using Service.Contracts;
 using Shared.DataTransferObjects;
 using System;
@@ -23,6 +24,25 @@ namespace Service
             _repositoryManager = repositoryManager;
             _logggerManager = logggerManager;
             _mapper = mapper;
+        }
+
+        public async Task<ApiBaseResponse> GetAllCompaniesAsync(bool trackChanges)
+        {
+            var companies = await _repositoryManager
+                                .Company
+                                .GetAllCompanies(trackChanges);
+            var companiesDto = _mapper.Map<IEnumerable<CompanyDto>>(companies);
+            return new ApiOkResponse<IEnumerable<CompanyDto>>(companiesDto);
+        }
+
+        public async Task<ApiBaseResponse> GetCompanyAsync(Guid companyId, bool trackChanges)
+        {
+            var company = await _repositoryManager.Company.GetCompany(companyId, trackChanges);
+
+            if (company == null) return new CompanyNotFoundResponse(companyId);
+
+            var companyDto = _mapper.Map<CompanyDto>(company);
+            return new ApiOkResponse<CompanyDto>(companyDto);
         }
 
         public async Task<CompanyDto> CreateCompanyAsync(CompanyForCreationDto company)
@@ -54,15 +74,6 @@ namespace Service
             return (_mapper.Map<IEnumerable<CompanyDto>>(companyEntities), ids);
         }
 
-        public async Task<IEnumerable<CompanyDto>> GetAllCompaniesAsync(bool trackChanges)
-        {
-            var companies = await _repositoryManager
-                                .Company
-                                .GetAllCompanies(trackChanges);
-
-            return _mapper.Map<IEnumerable<CompanyDto>>(companies);
-        }
-
         public async Task<IEnumerable<CompanyDto>> GetByIdsAsync(IEnumerable<Guid> ids, bool trackChanges)
         {
             if (ids is null)
@@ -73,13 +84,6 @@ namespace Service
                 throw new CollectionByIdsBadRequestException();
 
             return _mapper.Map<IEnumerable<CompanyDto>>(comapanyEntities);
-        }
-
-        public async Task<CompanyDto> GetCompanyAsync(Guid companyId, bool trackChanges)
-        {
-            var company = await GetCompanyAndCheckIfItExist(companyId, trackChanges);
-
-            return _mapper.Map<CompanyDto>(company);
         }
 
         public async Task DeleteCompanyAsync(Guid companyId, bool trackChanges)
