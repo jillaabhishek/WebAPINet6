@@ -1,0 +1,418 @@
+{
+	"info": {
+		"_postman_id": "e6ac6366-1251-4a2d-a101-3ab4115ddc40",
+		"name": "Net6WebAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "18709904"
+	},
+	"item": [
+		{
+			"name": "https://localhost:7237/api/companies/",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": "https://localhost:7237/api/companies/"
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:7237/api/companies/3d490a70-94ce-4d15-9494-5248280c2ce3",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": "https://localhost:7237/api/companies/3d490a70-94ce-4d15-9494-5248280c2ce3"
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:7237/api/companies/3d490a70-94ce-4d15-9494-5248280c2ce3",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "If-None-Match",
+						"value": "\"6253C1454FAD1EC4D6D4718F5E35E86B\"",
+						"type": "text"
+					}
+				],
+				"url": "https://localhost:7237/api/companies/3d490a70-94ce-4d15-9494-5248280c2ce3"
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:7237/api/companies/3d490a70-94ce-4d15-9494-5248280c2ce3/employees?pageNumber=1&pageSize=4&minAge=26&maxAge=32&searchTerm=A&orderBy=name",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {},
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/vnd.codemaze.hateoas+json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Admin_Solutions Ltd\",\r\n    \"address\": \"312 Forest Avenue, BF 923\",\r\n    \"country\":\"USA\",\r\n    \"employees\": [\r\n        {\r\n            \"name\": \"Amit Mishra\",\r\n            \"age\": 40,\r\n            \"position\": \"Admin\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7237/api/companies/3d490a70-94ce-4d15-9494-5248280c2ce3/employees?pageNumber=1&pageSize=4&minAge=26&maxAge=32&searchTerm=A&orderBy=name",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7237",
+					"path": [
+						"api",
+						"companies",
+						"3d490a70-94ce-4d15-9494-5248280c2ce3",
+						"employees"
+					],
+					"query": [
+						{
+							"key": "pageNumber",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "4"
+						},
+						{
+							"key": "minAge",
+							"value": "26"
+						},
+						{
+							"key": "maxAge",
+							"value": "32"
+						},
+						{
+							"key": "searchTerm",
+							"value": "A"
+						},
+						{
+							"key": "orderBy",
+							"value": "name"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:7237/api/companies/3d490a70-94ce-4d15-9494-5248280c2ce3",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "text/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Admin_Solutions Ltd\",\r\n    \"address\": \"312 Forest Avenue, BF 923\",\r\n    \"country\": \"Bharat\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://localhost:7237/api/companies/3d490a70-94ce-4d15-9494-5248280c2ce3"
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:7237/api/companies/3d490a70-94ce-4d15-9494-5248280c2ce3/employees/021ca3c1-0deb-4afd-ae94-2159a8479811",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json-patch+json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    { \"op\": \"remove\", \"path\": \"/age\" }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://localhost:7237/api/companies/3d490a70-94ce-4d15-9494-5248280c2ce3/employees/021ca3c1-0deb-4afd-ae94-2159a8479811"
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:7237/api/companies/",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"AJ Solutions Ltd\",\r\n    \"address\": \"312 Deliver Street, F 234\",\r\n    \"country\": \"USA\",\r\n    \"employees\": [\r\n    {\r\n        \"name\": \"David\",\r\n        \"age\": 35,\r\n        \"position\": \"Senior Software\"\r\n    },\r\n      {\r\n        \"name\": \"Mathew\",\r\n        \"age\": 25,\r\n        \"position\": \"Manager\"\r\n    }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://localhost:7237/api/companies/"
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:7237/api/companies/3d490a70-94ce-4d15-9494-5248280c2ce3/employees/",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Mihael Fins\",\r\n    \"age\": 25,\r\n    \"position\": \"SEO\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://localhost:7237/api/companies/3d490a70-94ce-4d15-9494-5248280c2ce3/employees/"
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:7237/api/companies/collection",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"name\": \"AJ Solution\",\r\n        \"address\": \"Sion\",\r\n        \"country\": \"India\"\r\n    },\r\n    {\r\n\r\n        \"name\": \"Wave solution LTD\",\r\n        \"address\": \"Sion\",\r\n        \"country\": \"India\"\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://localhost:7237/api/companies/collection"
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:7237/api/companies/collection/daffb86e-7b0d-483c-0ece-08db59eff90d,e9e7504f-12ce-4af8-0ecf-08db59eff90d",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "https://localhost:7237/api/companies/collection/daffb86e-7b0d-483c-0ece-08db59eff90d,e9e7504f-12ce-4af8-0ecf-08db59eff90d"
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:7237/api/companies",
+			"request": {
+				"method": "OPTIONS",
+				"header": [],
+				"url": "https://localhost:7237/api/companies"
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:7237/api/",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/vnd.codemaze.apiroot+json",
+						"type": "text"
+					}
+				],
+				"url": "https://localhost:7237/api/"
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:7237/api/companies/",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": ""
+					}
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "api-version",
+						"value": "2.0",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": "https://localhost:7237/api/companies/"
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:7237/api/authentication",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Jane\",\r\n    \"lastName\":\"Doe\",\r\n    \"userName\": \"JaneDoe\",\r\n    \"password\": \"Password2000\",\r\n    \"email\": \"janedoe@gmail.com\",\r\n    \"phonenumber\": \"+918693091345\",\r\n    \"roles\": [\r\n        \"Administrator\"\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://localhost:7237/api/authentication"
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:7237/api/authentication/login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"JDoe\",\r\n    \"password\": \"Password1000\" \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://localhost:7237/api/authentication/login"
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:7237/api/authentication/refresh",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiSmFuZURvZSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluaXN0cmF0b3IiLCJleHAiOjE2OTQ4NDc2ODYsImlzcyI6IkNvZGVNYXplQVBJIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzIzNyJ9.tsd8VJ1I7epoPJbA3F_NPb3VcyIPhwyYPiStdg7h_dw\",\r\n    \"refreshToken\": \"D47qKgnLjxfCWWdmk3fbCaFO6haAHe5D3xeDGRrGZfs=\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://localhost:7237/api/authentication/refresh"
+			},
+			"response": []
+		},
+		{
+			"name": "http://www.companyemployees.codemaze/api",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/vnd.codemaze.apiroot+json",
+						"type": "text"
+					}
+				],
+				"url": "http://www.companyemployees.codemaze/api"
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:7237/api/companies/",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "null",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://localhost:7237/api/companies/"
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:7237/api/companies/b904dc64-9f2c-445f-b6c7-08dbb796aafe",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Updated CQRS Test Company\",\r\n    \"address\": \"CQRS Test address\",\r\n    \"country\": \"CQRS test country\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://localhost:7237/api/companies/b904dc64-9f2c-445f-b6c7-08dbb796aafe"
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:7237/api/companies/3d490a70-94ce-4d15-9494-5248280c2ce3",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "https://localhost:7237/api/companies/3d490a70-94ce-4d15-9494-5248280c2ce3"
+			},
+			"response": []
+		}
+	]
+}
