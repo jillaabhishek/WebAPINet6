@@ -24,8 +24,9 @@
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.1.0" />
 	</ItemGroup>
 
+
 	<ItemGroup>
-		<ProjectReference Include="..\Service.Contracts\Service.Contracts.csproj" />
+	  <ProjectReference Include="..\Application\Application.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -18,3 +18,6 @@ WebAPI/CompanyEmployees.Presentation/bin/
 WebAPI/CompanyEmployees.Presentation/obj/
 WebAPI/Shared/obj/
 WebAPI/Contracts/bin/
+Publish/
+WebAPI/Application/obj/
+WebAPI/Shared/bin/
